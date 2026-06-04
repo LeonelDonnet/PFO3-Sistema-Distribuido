@@ -6,12 +6,12 @@ PORT = 5000
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect((HOST, PORT))
 
-tarea = input("Ingrese una tarea: ")
+tarea = input("Ingrese una operación: ")
 
 client.send(tarea.encode())
 
-respuesta = client.recv(1024).decode()
+resultado = client.recv(1024).decode()
 
-print("Servidor:", respuesta)
+print(f"Resultado recibido: {resultado}")
 
 client.close()

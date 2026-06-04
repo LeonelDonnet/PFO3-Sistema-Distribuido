@@ -6,13 +6,14 @@ cola_tareas = queue.Queue()
 
 def worker():
     while True:
-        tarea = cola_tareas.get()
+        tarea, cola_resultado = cola_tareas.get()
 
-        print(f"Worker procesando: {tarea}")
+        try:
+            resultado = str(eval(tarea))
+        except Exception as e:
+            resultado = f"Error: {e}"
 
-        resultado = eval(tarea)
-
-        print(f"Resultado: {resultado}")
+        cola_resultado.put(resultado)
 
         cola_tareas.task_done()
 
