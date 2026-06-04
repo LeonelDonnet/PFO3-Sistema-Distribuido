@@ -1,4 +1,5 @@
 import socket
+from workers import cola_tareas
 
 HOST = "127.0.0.1"
 PORT = 5000
@@ -11,13 +12,16 @@ print(f"Servidor escuchando en {HOST}:{PORT}")
 
 while True:
     client_socket, addr = server.accept()
+
     print(f"Conexión desde {addr}")
 
-    mensaje = client_socket.recv(1024).decode()
+    tarea = client_socket.recv(1024).decode()
 
-    print(f"Tarea recibida: {mensaje}")
+    print(f"Tarea recibida: {tarea}")
 
-    client_socket.send("Tarea recibida correctamente".encode())
+    cola_tareas.put(tarea)
+
+    client_socket.send("Tarea enviada al worker".encode())
 
     client_socket.close()
     
