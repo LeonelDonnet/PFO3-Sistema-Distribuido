@@ -29,3 +29,5 @@ while True:
     client_socket.send(resultado.encode())
 
     client_socket.close()
+
+    
